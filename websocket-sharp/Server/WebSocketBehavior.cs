@@ -1059,7 +1059,7 @@ namespace WebSocketSharp.Server
     /// </exception>
     protected void CloseAsync (CloseStatusCode code, string reason)
     {
-      if (_websocket == null) {
+      if (!_registered) {
         var msg = "The session has not started yet.";
 
         throw new InvalidOperationException (msg);
