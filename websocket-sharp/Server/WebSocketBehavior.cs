@@ -1082,8 +1082,8 @@ namespace WebSocketSharp.Server
     /// Called when the WebSocket interface for a session gets an error.
     /// </summary>
     /// <param name="e">
-    /// A <see cref="ErrorEventArgs"/> that represents the event data passed
-    /// from a <see cref="WebSocket.OnError"/> event.
+    /// A <see cref="ErrorEventArgs"/> that represents the error event data
+    /// passed from the interface.
     /// </param>
     protected virtual void OnError (ErrorEventArgs e)
     {
