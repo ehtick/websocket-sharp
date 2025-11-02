@@ -1257,15 +1257,14 @@ namespace WebSocketSharp.Server
     /// </exception>
     /// <exception cref="InvalidOperationException">
     ///   <para>
-    ///   The Send method is not available when the session has not
-    ///   started yet.
+    ///   This method is not available when the session has not started yet.
     ///   </para>
     ///   <para>
     ///   -or-
     ///   </para>
     ///   <para>
-    ///   The Send method is not available when the current state of
-    ///   the WebSocket interface is not Open.
+    ///   This method is not available when the current state of the WebSocket
+    ///   interface is not Open.
     ///   </para>
     /// </exception>
     protected void Send (string data)
