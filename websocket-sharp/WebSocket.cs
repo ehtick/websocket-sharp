@@ -492,7 +492,7 @@ namespace WebSocketSharp
 
       set {
         if (!_isClient) {
-          var msg = "The set operation is not available.";
+          var msg = "The interface is not for the client.";
 
           throw new InvalidOperationException (msg);
         }
