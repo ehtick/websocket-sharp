@@ -773,7 +773,9 @@ namespace WebSocketSharp
           throw new InvalidOperationException (msg);
         }
 
-        if (!value.IsNullOrEmpty ()) {
+        var isNullOrEmpty = value.IsNullOrEmpty ();
+
+        if (!isNullOrEmpty) {
           Uri uri;
 
           if (!Uri.TryCreate (value, UriKind.Absolute, out uri)) {
@@ -796,7 +798,7 @@ namespace WebSocketSharp
             throw new InvalidOperationException (msg);
           }
 
-          _origin = !value.IsNullOrEmpty () ? value.TrimEnd ('/') : value;
+          _origin = !isNullOrEmpty ? value.TrimEnd ('/') : value;
         }
       }
     }
