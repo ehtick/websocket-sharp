@@ -3907,8 +3907,8 @@ namespace WebSocketSharp
     /// <paramref name="data"/> is <see langword="null"/>.
     /// </exception>
     /// <exception cref="InvalidOperationException">
-    /// The SendAsync method is not available when the current state of
-    /// the interface is not Open.
+    /// This method is not available when the current state of the interface
+    /// is not Open.
     /// </exception>
     public void SendAsync (byte[] data, Action<bool> completed)
     {
