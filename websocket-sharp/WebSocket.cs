@@ -4354,8 +4354,8 @@ namespace WebSocketSharp
     ///   -or-
     ///   </para>
     ///   <para>
-    ///   The SetProxy method is not available when the current state of
-    ///   the interface is neither New nor Closed.
+    ///   This method is not available when the current state of the interface
+    ///   is neither New nor Closed.
     ///   </para>
     /// </exception>
     public void SetProxy (string url, string username, string password)
