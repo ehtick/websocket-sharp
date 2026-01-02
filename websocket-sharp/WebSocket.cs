@@ -100,7 +100,7 @@ namespace WebSocketSharp
     private bool                           _ignoreExtensions;
     private bool                           _inContinuation;
     private volatile bool                  _inMessage;
-    private bool                           _isClient;
+    private bool                           _client;
     private bool                           _isSecure;
     private volatile Logger                _log;
     private static readonly int            _maxRetryCountForConnect;
@@ -281,7 +281,7 @@ namespace WebSocketSharp
       }
 
       _base64Key = CreateBase64Key ();
-      _isClient = true;
+      _client = true;
       _isSecure = _uri.Scheme == "wss";
       _log = new Logger ();
       _message = messagec;
@@ -340,7 +340,7 @@ namespace WebSocketSharp
     internal WebHeaderCollection UserHeaders {
       get {
         if (_userHeaders == null) {
-          var state = _isClient
+          var state = _client
                       ? HttpHeaderType.Request
                       : HttpHeaderType.Response;
 
@@ -388,7 +388,7 @@ namespace WebSocketSharp
       }
 
       set {
-        if (!_isClient) {
+        if (!_client) {
           var msg = "The interface is not for the client.";
 
           throw new InvalidOperationException (msg);
@@ -491,7 +491,7 @@ namespace WebSocketSharp
       }
 
       set {
-        if (!_isClient) {
+        if (!_client) {
           var msg = "The interface is not for the client.";
 
           throw new InvalidOperationException (msg);
@@ -555,7 +555,7 @@ namespace WebSocketSharp
     /// </exception>
     public CookieCollection HandshakeResponseCookies {
       get {
-        if (!_isClient) {
+        if (!_client) {
           var msg = "The interface is not for the client.";
 
           throw new InvalidOperationException (msg);
@@ -603,7 +603,7 @@ namespace WebSocketSharp
     /// </exception>
     public NameValueCollection HandshakeResponseHeaders {
       get {
-        if (!_isClient) {
+        if (!_client) {
           var msg = "The interface is not for the client.";
 
           throw new InvalidOperationException (msg);
@@ -662,7 +662,7 @@ namespace WebSocketSharp
     /// </exception>
     public Logger Log {
       get {
-        if (!_isClient) {
+        if (!_client) {
           var msg = "The interface is not for the client.";
 
           throw new InvalidOperationException (msg);
@@ -767,7 +767,7 @@ namespace WebSocketSharp
       }
 
       set {
-        if (!_isClient) {
+        if (!_client) {
           var msg = "The interface is not for the client.";
 
           throw new InvalidOperationException (msg);
@@ -871,7 +871,7 @@ namespace WebSocketSharp
     /// </exception>
     public ClientSslConfiguration SslConfiguration {
       get {
-        if (!_isClient) {
+        if (!_client) {
           var msg = "The interface is not for the client.";
 
           throw new InvalidOperationException (msg);
@@ -901,7 +901,7 @@ namespace WebSocketSharp
     /// </value>
     public Uri Url {
       get {
-        return _isClient ? _uri : _context.RequestUri;
+        return _client ? _uri : _context.RequestUri;
       }
     }
 
@@ -1302,14 +1302,14 @@ namespace WebSocketSharp
       message = null;
 
       if (frame.IsMasked) {
-        if (_isClient) {
+        if (_client) {
           message = "A frame from the server is masked.";
 
           return false;
         }
       }
       else {
-        if (!_isClient) {
+        if (!_client) {
           message = "A frame from a client is not masked.";
 
           return false;
@@ -1482,12 +1482,12 @@ namespace WebSocketSharp
       var sent = false;
 
       if (send) {
-        var frame = WebSocketFrame.CreateCloseFrame (payloadData, _isClient);
+        var frame = WebSocketFrame.CreateCloseFrame (payloadData, _client);
         var bytes = frame.ToArray ();
 
         sent = sendBytes (bytes);
 
-        if (_isClient)
+        if (_client)
           frame.Unmask ();
       }
 
@@ -2034,7 +2034,7 @@ namespace WebSocketSharp
     {
       _log.Trace ("A ping was received.");
 
-      var pong = WebSocketFrame.CreatePongFrame (frame.PayloadData, _isClient);
+      var pong = WebSocketFrame.CreatePongFrame (frame.PayloadData, _client);
 
       lock (_forState) {
         if (_readyState != WebSocketState.Open) {
@@ -2053,7 +2053,7 @@ namespace WebSocketSharp
       _log.Trace ("A pong to this ping has been sent.");
 
       if (_emitOnPing) {
-        if (_isClient)
+        if (_client)
           pong.Unmask ();
 
         var e = new MessageEventArgs (frame);
@@ -2211,7 +2211,7 @@ namespace WebSocketSharp
 
     private void releaseResources ()
     {
-      if (_isClient)
+      if (_client)
         releaseClientResources ();
       else
         releaseServerResources ();
@@ -2343,7 +2343,7 @@ namespace WebSocketSharp
 
     private bool send (Fin fin, Opcode opcode, byte[] data, bool compressed)
     {
-      var frame = new WebSocketFrame (fin, opcode, data, compressed, _isClient);
+      var frame = new WebSocketFrame (fin, opcode, data, compressed, _client);
       var rawFrame = frame.ToArray ();
 
       return send (rawFrame);
@@ -3034,7 +3034,7 @@ namespace WebSocketSharp
         throw new ArgumentOutOfRangeException ("code", msg);
       }
 
-      if (_isClient) {
+      if (_client) {
         if (code == 1011) {
           var msg = "1011 cannot be used.";
 
@@ -3144,7 +3144,7 @@ namespace WebSocketSharp
         throw new ArgumentException (msg, "code");
       }
 
-      if (_isClient) {
+      if (_client) {
         if (code == CloseStatusCode.ServerError) {
           var msg = "ServerError cannot be used.";
 
@@ -3370,7 +3370,7 @@ namespace WebSocketSharp
         throw new ArgumentOutOfRangeException ("code", msg);
       }
 
-      if (_isClient) {
+      if (_client) {
         if (code == 1011) {
           var msg = "1011 cannot be used.";
 
@@ -3486,7 +3486,7 @@ namespace WebSocketSharp
         throw new ArgumentException (msg, "code");
       }
 
-      if (_isClient) {
+      if (_client) {
         if (code == CloseStatusCode.ServerError) {
           var msg = "ServerError cannot be used.";
 
@@ -3550,7 +3550,7 @@ namespace WebSocketSharp
     /// </exception>
     public void Connect ()
     {
-      if (!_isClient) {
+      if (!_client) {
         var msg = "The interface is not for the client.";
 
         throw new InvalidOperationException (msg);
@@ -3595,7 +3595,7 @@ namespace WebSocketSharp
     /// </exception>
     public void ConnectAsync ()
     {
-      if (!_isClient) {
+      if (!_client) {
         var msg = "The interface is not for the client.";
 
         throw new InvalidOperationException (msg);
@@ -4235,7 +4235,7 @@ namespace WebSocketSharp
     /// </exception>
     public void SetCredentials (string username, string password, bool preAuth)
     {
-      if (!_isClient) {
+      if (!_client) {
         var msg = "The interface is not for the client.";
 
         throw new InvalidOperationException (msg);
@@ -4360,7 +4360,7 @@ namespace WebSocketSharp
     /// </exception>
     public void SetProxy (string url, string username, string password)
     {
-      if (!_isClient) {
+      if (!_client) {
         var msg = "The interface is not for the client.";
 
         throw new InvalidOperationException (msg);
