@@ -74,6 +74,7 @@ namespace WebSocketSharp
 
     private AuthenticationChallenge        _authChallenge;
     private string                         _base64Key;
+    private bool                           _client;
     private Action                         _closeContext;
     private CompressionMethod              _compression;
     private WebSocketContext               _context;
@@ -100,7 +101,6 @@ namespace WebSocketSharp
     private bool                           _ignoreExtensions;
     private bool                           _inContinuation;
     private volatile bool                  _inMessage;
-    private bool                           _client;
     private bool                           _isSecure;
     private volatile Logger                _log;
     private static readonly int            _maxRetryCountForConnect;
