@@ -1726,7 +1726,8 @@ namespace WebSocketSharp.Net
     /// characters.
     /// </exception>
     /// <exception cref="InvalidOperationException">
-    /// This instance does not allow the request header.
+    /// This method is not available if the current instance does not allow
+    /// the request header.
     /// </exception>
     public void Set (HttpRequestHeader header, string value)
     {
