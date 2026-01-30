@@ -955,6 +955,12 @@ namespace WebSocketSharp.Net
         throw new ArgumentException (msg, "header");
       }
 
+      if (idx == 0) {
+        var msg = "It does not include a header name.";
+
+        throw new ArgumentException (msg, "header");
+      }
+
       var name = header.Substring (0, idx);
       var val = idx < header.Length - 1
                 ? header.Substring (idx + 1)
