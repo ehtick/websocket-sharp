@@ -735,7 +735,8 @@ namespace WebSocketSharp.Net
     ///   -or-
     ///   </para>
     ///   <para>
-    ///   <paramref name="value"/> contains an invalid character.
+    ///   The set operation throws this exception if <paramref name="value"/>
+    ///   contains an invalid character.
     ///   </para>
     /// </exception>
     /// <exception cref="ArgumentOutOfRangeException">
