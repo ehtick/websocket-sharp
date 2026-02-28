@@ -1400,7 +1400,7 @@ namespace WebSocketSharp.Net
     ///   </para>
     /// </returns>
     /// <param name="name">
-    /// A <see cref="string"/> that specifies the name of the header to get.
+    /// A <see cref="string"/> that specifies the name of a header to get.
     /// </param>
     public override string Get (string name)
     {
