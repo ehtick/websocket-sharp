@@ -1689,7 +1689,7 @@ namespace WebSocketSharp.Net
     /// Removes the specified header from the collection.
     /// </summary>
     /// <param name="name">
-    /// A <see cref="string"/> that specifies the name of the header to remove.
+    /// A <see cref="string"/> that specifies the name of a header to remove.
     /// </param>
     /// <exception cref="ArgumentException">
     ///   <para>
