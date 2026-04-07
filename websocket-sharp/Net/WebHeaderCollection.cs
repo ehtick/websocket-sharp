@@ -1316,6 +1316,11 @@ namespace WebSocketSharp.Net
     /// <summary>
     /// Adds a header with the specified name and value to the collection.
     /// </summary>
+    /// <remarks>
+    /// If the specified header is already present in the collection,
+    /// <paramref name="value"/> is added to the comma-separated list of
+    /// the existing values.
+    /// </remarks>
     /// <param name="name">
     /// A <see cref="string"/> that specifies the name of a header to add.
     /// </param>
