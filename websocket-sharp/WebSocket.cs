@@ -1933,8 +1933,11 @@ namespace WebSocketSharp
 
       startReceiving ();
 
+      var canEmit = executeBeforeOpen ();
+
       try {
-        OnOpen.Emit (this, EventArgs.Empty);
+        if (canEmit)
+          OnOpen.Emit (this, EventArgs.Empty);
       }
       catch (Exception ex) {
         _log.Error (ex.Message);

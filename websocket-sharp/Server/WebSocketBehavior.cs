@@ -653,6 +653,8 @@ namespace WebSocketSharp.Server
         return false;
       }
 
+      _startTime = DateTime.Now;
+
       return true;
     }
 
@@ -678,16 +680,6 @@ namespace WebSocketSharp.Server
 
     private void onOpen (object sender, EventArgs e)
     {
-      _registered = _sessions.Add (this);
-
-      if (!_registered) {
-        _websocket.Close (CloseStatusCode.Away);
-
-        return;
-      }
-
-      _startTime = DateTime.Now;
-
       OnOpen ();
     }
 
@@ -723,6 +715,7 @@ namespace WebSocketSharp.Server
       _websocket = context.WebSocket;
       _websocket.CustomHandshakeRequestChecker = checkHandshakeRequest;
       _websocket.CustomHandshakeRequestResponder = respondToHandshakeRequest;
+      _websocket.ExecutorBeforeOpen = executeBeforeOpen;
 
       if (_emitOnPing)
         _websocket.EmitOnPing = true;
