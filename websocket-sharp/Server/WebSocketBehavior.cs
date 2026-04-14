@@ -643,6 +643,16 @@ namespace WebSocketSharp.Server
       return null;
     }
 
+    private bool executeBeforeClose ()
+    {
+      if (!_registered)
+        return false;
+
+      _sessions.Remove (_id);
+
+      return true;
+    }
+
     private bool executeBeforeOpen ()
     {
       _registered = _sessions.Add (this);
