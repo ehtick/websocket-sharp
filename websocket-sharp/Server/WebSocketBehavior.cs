@@ -718,8 +718,10 @@ namespace WebSocketSharp.Server
       _sessions = sessions;
 
       _websocket = context.WebSocket;
+
       _websocket.CustomHandshakeRequestChecker = checkHandshakeRequest;
       _websocket.CustomHandshakeRequestResponder = respondToHandshakeRequest;
+
       _websocket.ExecutorBeforeClose = executeBeforeClose;
       _websocket.ExecutorBeforeOpen = executeBeforeOpen;
 
